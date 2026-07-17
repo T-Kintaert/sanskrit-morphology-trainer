@@ -6056,12 +6056,12 @@ video {
     margin-right: -1.5rem;
   }
 
-  .sm\:mb-6 {
-    margin-bottom: 1.5rem;
+  .sm\:mb-4 {
+    margin-bottom: 1rem;
   }
 
-  .sm\:mb-8 {
-    margin-bottom: 2rem;
+  .sm\:mb-6 {
+    margin-bottom: 1.5rem;
   }
 
   .sm\:ml-2 {
@@ -6100,12 +6100,16 @@ video {
     display: none;
   }
 
-  .sm\:h-12 {
-    height: 3rem;
+  .sm\:h-10 {
+    height: 2.5rem;
   }
 
   .sm\:max-h-\[70vh\] {
     max-height: 70vh;
+  }
+
+  .sm\:w-12 {
+    width: 3rem;
   }
 
   .sm\:w-14 {
@@ -6122,12 +6126,6 @@ video {
 
   .sm\:w-32 {
     width: 8rem;
-  }
-
-  .sm\:border-spacing-2 {
-    --tw-border-spacing-x: 0.5rem;
-    --tw-border-spacing-y: 0.5rem;
-    border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
   }
 
   .sm\:grid-cols-2 {
@@ -6219,11 +6217,6 @@ video {
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-  }
-
-  .sm\:py-10 {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
   }
 
   .sm\:py-12 {
@@ -10643,9 +10636,9 @@ function Trainer({
   })))))), trainerMode === 'parse' && tCfg.started && !qStats.finished && qQuest && /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col items-center max-w-2xl mx-auto w-full"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "mb-2 sm:mb-6 w-full text-center"
+    className: "mb-2 sm:mb-4 w-full text-center"
   }, /*#__PURE__*/React.createElement("div", {
-    className: `bg-white dark:bg-stone-900 px-6 py-6 sm:py-10 rounded-2xl sm:rounded-3xl border-2 border-teal-500/20 shadow-inner flex flex-col items-center gap-2 ${iastFontClass}`
+    className: `bg-white dark:bg-stone-900 px-6 py-4 sm:py-6 rounded-2xl sm:rounded-3xl border-2 border-teal-500/20 shadow-inner flex flex-col items-center gap-2 ${iastFontClass}`
   }, (tCfg.showStem || !!selOpt) && /*#__PURE__*/React.createElement("div", {
     className: `text-sm sm:text-base font-normal mb-1 ${trainerCat === 'bilden' ? 'text-teal-700 dark:text-teal-400' : 'text-stone-400'}`
   }, /*#__PURE__*/React.createElement("span", {
@@ -10686,9 +10679,9 @@ function Trainer({
   })), selOpt && pTM !== qQuest.cell.tenseShort && /*#__PURE__*/React.createElement("div", {
     className: "text-center text-[10px] text-red-500 font-bold mt-2 uppercase tracking-tighter"
   }, "Richtig w\xE4re: ", qQuest.cell.fullParadigm.metadata?.tenseMood || qQuest.cell.tenseShort)), /*#__PURE__*/React.createElement("div", {
-    className: "w-full overflow-x-auto no-scrollbar py-1 sm:py-4 mb-2 sm:mb-8"
+    className: "w-full overflow-x-auto no-scrollbar py-1 sm:py-2 mb-2 sm:mb-4"
   }, /*#__PURE__*/React.createElement("table", {
-    className: "mx-auto border-separate border-spacing-1 sm:border-spacing-2 table-fixed"
+    className: "mx-auto border-separate border-spacing-1 table-fixed"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     className: "w-10"
   }), [0, 1, 2].map(ci => /*#__PURE__*/React.createElement("th", {
@@ -10734,7 +10727,7 @@ function Trainer({
             ...prev,
             [key]: !prev[key]
           })),
-          className: `w-10 h-10 sm:w-14 sm:h-12 rounded-lg border-2 font-bold text-xs transition-all active:scale-90 flex items-center justify-center 
+          className: `w-10 h-10 sm:w-12 sm:h-10 rounded-lg border-2 font-bold text-xs transition-all active:scale-90 flex items-center justify-center 
                                                     ${!pa.grid[ri][ci] || pa.grid[ri][ci].trim() === '' || !isCellFunctional ? 'opacity-0 pointer-events-none' : ''} 
                                                     ${btnClass}`
         }, selOpt && isSolution && /*#__PURE__*/React.createElement("span", {
