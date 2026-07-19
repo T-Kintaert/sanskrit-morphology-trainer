@@ -829,55 +829,6 @@ video {
 /* Make elements with the HTML hidden attribute stay hidden by default */
 [hidden]:where(:not([hidden="until-found"])) {
   display: none;
-} .\!container {
-  width: 100% !important;
-} .container {
-  width: 100%;
-} @media (min-width: 640px) {
-
-  .\!container {
-    max-width: 640px !important;
-  }
-
-  .container {
-    max-width: 640px;
-  }
-} @media (min-width: 768px) {
-
-  .\!container {
-    max-width: 768px !important;
-  }
-
-  .container {
-    max-width: 768px;
-  }
-} @media (min-width: 1024px) {
-
-  .\!container {
-    max-width: 1024px !important;
-  }
-
-  .container {
-    max-width: 1024px;
-  }
-} @media (min-width: 1280px) {
-
-  .\!container {
-    max-width: 1280px !important;
-  }
-
-  .container {
-    max-width: 1280px;
-  }
-} @media (min-width: 1536px) {
-
-  .\!container {
-    max-width: 1536px !important;
-  }
-
-  .container {
-    max-width: 1536px;
-  }
 } .pointer-events-none {
   pointer-events: none;
 } .pointer-events-auto {
@@ -5807,6 +5758,10 @@ video {
 } .focus\:ring-teal-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(20 184 166 / var(--tw-ring-opacity, 1));
+} .focus\:ring-teal-500\/60:focus {
+  --tw-ring-color: rgb(20 184 166 / 0.6);
+} .focus\:ring-offset-1:focus {
+  --tw-ring-offset-width: 1px;
 } .active\:scale-90:active {
   --tw-scale-x: .9;
   --tw-scale-y: .9;
@@ -6033,14 +5988,20 @@ video {
 } .dark\:hover\:text-stone-200:hover:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(231 229 228 / var(--tw-text-opacity, 1));
+} .dark\:focus\:ring-offset-stone-800:focus:is(.dark *) {
+  --tw-ring-offset-color: #292524;
 } @media (min-width: 640px) {
 
-  .sm\:sticky {
-    position: sticky;
+  .sm\:fixed {
+    position: fixed;
   }
 
   .sm\:bottom-0 {
     bottom: 0px;
+  }
+
+  .sm\:left-1\/2 {
+    left: 50%;
   }
 
   .sm\:left-4 {
@@ -6051,9 +6012,9 @@ video {
     top: 6rem;
   }
 
-  .sm\:-mx-6 {
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
+  .sm\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
   .sm\:mb-4 {
@@ -6084,8 +6045,8 @@ video {
     margin-left: auto;
   }
 
-  .sm\:mt-8 {
-    margin-top: 2rem;
+  .sm\:mt-0 {
+    margin-top: 0px;
   }
 
   .sm\:inline {
@@ -6094,6 +6055,10 @@ video {
 
   .sm\:flex {
     display: flex;
+  }
+
+  .sm\:grid {
+    display: grid;
   }
 
   .sm\:hidden {
@@ -6128,6 +6093,19 @@ video {
     width: 8rem;
   }
 
+  .sm\:w-full {
+    width: 100%;
+  }
+
+  .sm\:max-w-6xl {
+    max-width: 72rem;
+  }
+
+  .sm\:-translate-x-1\/2 {
+    --tw-translate-x: -50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
   .sm\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -6138,6 +6116,10 @@ video {
 
   .sm\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-\[1fr_auto_1fr\] {
+    grid-template-columns: 1fr auto 1fr;
   }
 
   .sm\:flex-row {
@@ -6156,10 +6138,6 @@ video {
     justify-content: flex-start;
   }
 
-  .sm\:justify-between {
-    justify-content: space-between;
-  }
-
   .sm\:gap-2 {
     gap: 0.5rem;
   }
@@ -6170,6 +6148,14 @@ video {
 
   .sm\:gap-6 {
     gap: 1.5rem;
+  }
+
+  .sm\:justify-self-start {
+    justify-self: start;
+  }
+
+  .sm\:justify-self-center {
+    justify-self: center;
   }
 
   .sm\:rounded-3xl {
@@ -6242,6 +6228,10 @@ video {
   .sm\:py-6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+  }
+
+  .sm\:pb-24 {
+    padding-bottom: 6rem;
   }
 
   .sm\:pl-2 {
@@ -8147,6 +8137,10 @@ function App() {
         // Wir führen den Klick nur aus, wenn ein Button fokussiert ist 
         // und wir nicht gerade in einem Eingabefeld (Input/Textarea) tippen.
         if (el && el.tagName === 'BUTTON' && !e.defaultPrevented) {
+          // Verhindert, dass der Browser den fokussierten Button zusätzlich
+          // über seine eigene Standardaktion klickt (sonst Doppel-Klick,
+          // der Toggle-Buttons wieder zurückschaltet).
+          e.preventDefault();
           el.click();
         }
       }
@@ -8449,7 +8443,7 @@ function App() {
     },
     className: "w-full py-3 bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 font-bold rounded-xl hover:bg-stone-200 dark:hover:bg-stone-600 active:scale-95 transition-all"
   }, t('undoCancel', settings?.language)))))), /*#__PURE__*/React.createElement("main", {
-    className: "flex-1 overflow-auto pb-12"
+    className: "flex-1 overflow-auto pb-12 sm:pb-24"
   }, view === 'library' && /*#__PURE__*/React.createElement(Library, {
     setParadigms: setParadigms,
     settings: settings,
@@ -9905,39 +9899,98 @@ function Trainer({
   // Finale Korrektur Navigation (suche nach diesem exakten kommentar)
   useEffect(() => {
     if (tCfg.started) return;
-    const container = document.querySelector('.trainer-config-container');
-    if (container && document.activeElement === document.body) {
-      const activeBtn = container.querySelector('.bg-teal-600') || container.querySelector('.border-teal-500');
-      activeBtn?.focus();
+
+    // Baut die Fokus-Reihenfolge: Quiz-Flashcards-Formenbestimmung-Filter-[Filter-Untermenü]-Fragenanzahl-Übung starten-Bestimmen-Bilden
+    const buildFocusables = () => {
+      const navEls = {};
+      document.querySelectorAll('[data-navmain]').forEach(el => {
+        if (!el.disabled) navEls[el.getAttribute('data-navmain')] = el;
+      });
+      let list = [];
+      ['1', '2', '3', '4'].forEach(k => {
+        if (navEls[k]) list.push(navEls[k]);
+      });
+      if (showFilters) {
+        const section = document.querySelector('[data-filter-section]');
+        if (section) list = list.concat(Array.from(section.querySelectorAll('button:not([disabled])')));
+      }
+      ['5', '6', '7', '8'].forEach(k => {
+        if (navEls[k]) list.push(navEls[k]);
+      });
+      return list;
+    };
+
+    // Ermittelt anhand des App-Zustands (nicht des DOM-Fokus), welcher der drei Übungsart-Buttons
+    // aktuell markiert ist. Klicks mit der Maus setzen in manchen Browsern (z.B. Safari) den
+    // echten Tastatur-Fokus nicht automatisch auf den geklickten Button, daher ist der App-Zustand
+    // die zuverlässigere Quelle für "wo bin ich gerade".
+    const getSelectedModeKey = () => {
+      if (trainerCat === 'bestimmen') {
+        if (trainerMode === 'flash') return '2';
+        if (trainerMode === 'parse') return '3';
+        return '1';
+      }
+      if (trainerMode === 'flash') return '2';
+      if (trainerMode === 'full') return '3';
+      return '1';
+    };
+    const focusSelectedMode = () => {
+      const key = getSelectedModeKey();
+      document.querySelector(`[data-navmain="${key}"]`)?.focus();
+    };
+    if (document.activeElement === document.body) {
+      focusSelectedMode();
     }
+
+    // Erzwingt echten DOM-Fokus auf navigierbare Elemente auch bei Maus-/Touch-Klicks
+    // (in manchen Browsern setzt ein Klick auf <button> sonst keinen Fokus).
+    const handleClickFocus = e => {
+      const target = e.target.closest('button:not([disabled]), input');
+      if (!target) return;
+      const inFilterSection = document.querySelector('[data-filter-section]')?.contains(target);
+      if (target.hasAttribute('data-navmain') || inFilterSection) {
+        target.focus();
+      }
+    };
+    document.addEventListener('mousedown', handleClickFocus);
     const handleConfigNav = e => {
-      const container = document.querySelector('.trainer-config-container');
-      if (!container) return;
-      const focusables = Array.from(container.querySelectorAll('button:not([disabled]), input'));
-      const index = focusables.indexOf(document.activeElement);
+      const focusables = buildFocusables();
+      if (focusables.length === 0) return;
+
+      // Ausgangspunkt: echter Fokus, falls vorhanden – sonst der App-seitig markierte Übungsbutton
+      let index = focusables.indexOf(document.activeElement);
+      if (index === -1) {
+        index = focusables.indexOf(document.querySelector(`[data-navmain="${getSelectedModeKey()}"]`));
+      }
 
       // ENTER-Logik: Absolut minimalistisch (suche nach diesem exakten kommentar)
       if (e.key === 'Enter') {
-        const el = document.activeElement;
-        if (!el || !container.contains(el)) return;
+        const el = index !== -1 ? focusables[index] : document.activeElement;
+        if (!el || focusables.indexOf(el) === -1) return;
         const isStartAction = el.innerText.match(/Quiz|Flashcards|Formenbestimmung|Vollständige Flexion|Übung starten|Parsing|Full Inflection|Start Exercise/i);
+        const alreadyHandled = e.defaultPrevented;
         if (isStartAction) {
           // NUR beim Starten fangen wir das Event ab
           e.preventDefault();
+          // Stellt sicher, dass die Übungsart-Auswahl (onClick von Quiz/Flashcards/Formenbestimmung)
+          // tatsächlich ausgeführt wird, auch wenn der Button gerade nicht den echten Fokus trägt.
+          if (!alreadyHandled && el.tagName === 'BUTTON') el.click();
           setTCfg(prev => ({
             ...prev,
             started: true
           }));
         } else {
-          // Bei ALLEN anderen Buttons (Filter/Numeri) tun wir hier: NICHTS.
-          // Das erlaubt dem Browser (oder deinem globalen Handler in der App), 
-          // den Button ganz normal zu klicken.
+          // Bei ALLEN anderen Buttons (Filter/Numeri/Bestimmen/Bilden): Klick auslösen,
+          // falls der Button gerade nicht den echten DOM-Fokus trägt (z.B. nach Mausklick
+          // in Safari), damit Enter zuverlässig togglet.
+          if (document.activeElement !== el) el.click();
         }
         return;
       }
       const navKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
       if (!navKeys.includes(e.key)) return;
       if (document.activeElement.tagName === 'INPUT' && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) return;
+      if (index === -1) return;
       e.preventDefault();
       let nextIndex;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -9948,8 +10001,11 @@ function Trainer({
       focusables[nextIndex]?.focus();
     };
     window.addEventListener('keydown', handleConfigNav);
-    return () => window.removeEventListener('keydown', handleConfigNav);
-  }, [tCfg.started, trainerCat, showFilters, trainerMode]);
+    return () => {
+      window.removeEventListener('keydown', handleConfigNav);
+      document.removeEventListener('mousedown', handleClickFocus);
+    };
+  }, [tCfg.started, trainerCat, showFilters, trainerMode, tCfg.quizType]);
   const startFullTrainer = () => {
     if (fCfg.mode === 'hor' && fCfg.nums.length < 2) fCfg.mode = 'ver';
     let cells = [];
@@ -10306,8 +10362,9 @@ function Trainer({
         lastCategory: 'bestimmen'
       }));
     }
-    /* Fokus-Ring entfernt, relative Positionierung und z-10 hinzugefügt (suche nach diesem exakten kommentar) */,
-    className: `px-6 py-2.5 rounded-xl text-xs font-bold transition-all outline-none relative ${trainerCat === 'bestimmen' ? 'bg-white dark:bg-stone-700 text-teal-600 shadow-md scale-105 z-10' : 'text-stone-500 hover:text-stone-700'}`
+    /* Dezenter Fokus-Ring für Tastaturnavigation (suche nach diesem exakten kommentar) */,
+    className: `px-6 py-2.5 rounded-xl text-xs font-bold transition-all outline-none relative focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-1 dark:focus:ring-offset-stone-800 ${trainerCat === 'bestimmen' ? 'bg-white dark:bg-stone-700 text-teal-600 shadow-md scale-105 z-10' : 'text-stone-500 hover:text-stone-700'}`,
+    "data-navmain": "7"
   }, t('trainerCatIdentify', settings?.language)), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       setTrainerCat('bilden');
@@ -10320,8 +10377,9 @@ function Trainer({
         lastCategory: 'bilden'
       }));
     }
-    /* Fokus-Ring entfernt, relative Positionierung und z-10 hinzugefügt (suche nach diesem exakten kommentar) */,
-    className: `px-6 py-2.5 rounded-xl text-xs font-bold transition-all outline-none relative ${trainerCat === 'bilden' ? 'bg-white dark:bg-stone-700 text-teal-600 shadow-md scale-105 z-10' : 'text-stone-500 hover:text-stone-700'}`
+    /* Dezenter Fokus-Ring für Tastaturnavigation (suche nach diesem exakten kommentar) */,
+    className: `px-6 py-2.5 rounded-xl text-xs font-bold transition-all outline-none relative focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-1 dark:focus:ring-offset-stone-800 ${trainerCat === 'bilden' ? 'bg-white dark:bg-stone-700 text-teal-600 shadow-md scale-105 z-10' : 'text-stone-500 hover:text-stone-700'}`,
+    "data-navmain": "8"
   }, t('trainerCatForm', settings?.language)))), !tCfg.started && /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col items-center py-4 sm:py-6 max-w-2xl mx-auto fade-in w-full trainer-config-container"
   }, /*#__PURE__*/React.createElement("h3", {
@@ -10331,6 +10389,7 @@ function Trainer({
   }, /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-1 sm:grid-cols-3 gap-3"
   }, trainerCat === 'bestimmen' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    "data-navmain": "1",
     onClick: () => {
       setTrainerMode('sort');
       setTCfg(prev => ({
@@ -10340,6 +10399,7 @@ function Trainer({
     },
     className: `p-4 rounded-2xl border-2 font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${trainerMode === 'sort' && tCfg.quizType === 'wordToLabel' ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400'}`
   }, t('trainerModeQuiz', settings?.language)), /*#__PURE__*/React.createElement("button", {
+    "data-navmain": "2",
     onClick: () => {
       setTrainerMode('flash');
       setTCfg(prev => ({
@@ -10349,9 +10409,11 @@ function Trainer({
     },
     className: `p-4 rounded-2xl border-2 font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${trainerMode === 'flash' ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400'}`
   }, t('trainerModeFlash', settings?.language)), /*#__PURE__*/React.createElement("button", {
+    "data-navmain": "3",
     onClick: () => setTrainerMode('parse'),
     className: `p-4 rounded-2xl border-2 font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${trainerMode === 'parse' ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400'}`
   }, t('trainerModeParse', settings?.language))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+    "data-navmain": "1",
     onClick: () => {
       setTrainerMode('sort');
       setTCfg(prev => ({
@@ -10361,6 +10423,7 @@ function Trainer({
     },
     className: `p-4 rounded-2xl border-2 font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${trainerMode === 'sort' && tCfg.quizType === 'labelToWord' ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400'}`
   }, t('trainerModeQuiz', settings?.language)), /*#__PURE__*/React.createElement("button", {
+    "data-navmain": "2",
     onClick: () => {
       setTrainerMode('flash');
       setTCfg(prev => ({
@@ -10370,6 +10433,7 @@ function Trainer({
     },
     className: `p-4 rounded-2xl border-2 font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${trainerMode === 'flash' ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400'}`
   }, t('trainerModeFlash', settings?.language)), /*#__PURE__*/React.createElement("button", {
+    "data-navmain": "3",
     onClick: () => setTrainerMode('full'),
     className: `p-4 rounded-2xl border-2 font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${trainerMode === 'full' ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400'}`
   }, t('trainerModeFull', settings?.language)))), /*#__PURE__*/React.createElement("div", {
@@ -10411,6 +10475,7 @@ function Trainer({
     const isFilterActive = tCfg.rows.length < (isDecl ? 8 : 3) || tCfg.nums.length < 3 || hasGanaFilter;
     return /*#__PURE__*/React.createElement("button", {
       type: "button",
+      "data-navmain": "4",
       onClick: () => setShowFilters(!showFilters),
       className: `flex items-center gap-2 px-4 py-2 rounded-xl border-2 transition-all font-bold text-xs focus:ring-2 focus:ring-teal-500 outline-none ${showFilters ? 'bg-teal-600 border-teal-700 text-white shadow-md' : isFilterActive ? 'bg-white dark:bg-stone-800 border-teal-500 text-teal-600' : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-400 hover:text-teal-600'}`
     }, /*#__PURE__*/React.createElement(Filter, {
@@ -10423,6 +10488,7 @@ function Trainer({
     min: "1",
     max: "99",
     value: tCfg.total,
+    "data-navmain": "5",
     onChange: e => {
       const val = e.target.value;
       setTCfg(prev => ({
@@ -10434,6 +10500,7 @@ function Trainer({
   }), /*#__PURE__*/React.createElement("span", {
     className: "text-[10px] font-bold text-stone-500 uppercase tracking-widest"
   }, t('trainerQuestionCount', settings?.language))))), showFilters && /*#__PURE__*/React.createElement("div", {
+    "data-filter-section": "true",
     className: "flex flex-col gap-6 pt-6 border-t border-stone-100 dark:border-stone-800/50 animate-in fade-in duration-300"
   }, p.type === 'conjugation' && /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col items-center border-b border-stone-100 dark:border-stone-800/50 pb-6"
@@ -10531,6 +10598,7 @@ function Trainer({
     className: "pt-8 border-t border-stone-200 dark:border-stone-800 w-full mt-4"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
+    "data-navmain": "6",
     onClick: () => setTCfg(prev => ({
       ...prev,
       started: true
@@ -10768,7 +10836,9 @@ function Trainer({
     const target = qQuest.cell.val.trim().toLowerCase();
     const groups = {};
     qQuest.cell.fullParadigm.grid.forEach((r, ri) => r.forEach((c, ci) => {
-      if (c?.trim().toLowerCase() === target) {
+      // Versteckten Vokativ (hideVocative) hier genauso ausschließen wie in der Formenbestimmung (suche nach diesem exakten kommentar)
+      const isHiddenVoc = qQuest.cell.fullParadigm.type === 'declension' && qQuest.cell.fullParadigm.hideVocative && ri === 7;
+      if (!isHiddenVoc && c?.trim().toLowerCase() === target) {
         if (!groups[ci]) groups[ci] = [];
         groups[ci].push(ri);
       }
@@ -10858,7 +10928,7 @@ function Trainer({
     onClick: () => onFinish(sessionResults),
     className: `px-8 py-3 rounded-xl font-bold shadow-lg transition-all active:scale-95 text-white ${flashSelection === 'finish' ? 'bg-lime-500 ring-4 ring-lime-400 scale-105 z-10' : 'bg-lime-600'}`
   }, t('trainerBtnFinish', settings?.language)))), /*#__PURE__*/React.createElement("div", {
-    className: "relative sm:sticky sm:bottom-0 bg-transparent sm:bg-white/95 sm:dark:bg-stone-850/95 sm:backdrop-blur-md -mx-4 sm:-mx-6 px-4 sm:px-6 py-0 sm:py-4 mt-2 sm:mt-8 sm:border-t border-stone-200 dark:border-stone-800 flex flex-wrap justify-center sm:justify-between items-center gap-4 z-[100]"
+    className: "relative sm:fixed sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-6xl bg-transparent sm:bg-white/95 sm:dark:bg-stone-850/95 sm:backdrop-blur-md -mx-4 sm:mx-0 px-4 sm:px-6 py-0 sm:py-4 mt-2 sm:mt-0 sm:border-t border-stone-200 dark:border-stone-800 flex flex-wrap justify-center items-center gap-4 z-[100] sm:grid sm:grid-cols-[1fr_auto_1fr]"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       // Wir stellen sicher, dass started auf false geht, 
@@ -10869,11 +10939,11 @@ function Trainer({
       }));
       onCancel();
     },
-    className: "hidden sm:flex text-stone-500 font-bold hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 transition-colors items-center gap-2"
+    className: "hidden sm:flex sm:justify-self-start text-stone-500 font-bold hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 transition-colors items-center gap-2"
   }, /*#__PURE__*/React.createElement(RotateCcw, {
     size: 18
   }), " ", t('trainerBtnCancel', settings?.language)), /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-2"
+    className: "flex gap-2 sm:justify-self-center"
   }, trainerMode === 'full' && fCfg.started && res === null && !qStats.finished && /*#__PURE__*/React.createElement("button", {
     onClick: showSolution,
     className: "bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 px-4 py-2 sm:px-6 sm:py-4 rounded-2xl font-bold hover:bg-stone-200 dark:hover:bg-stone-700 transition-all flex items-center gap-2 active:scale-95 text-xs sm:text-base"
