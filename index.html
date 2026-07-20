@@ -1126,6 +1126,8 @@ video {
   cursor: default;
 } .cursor-help {
   cursor: help;
+} .cursor-move {
+  cursor: move;
 } .cursor-not-allowed {
   cursor: not-allowed;
 } .cursor-pointer {
@@ -4051,6 +4053,8 @@ video {
   line-height: 1.25;
 } .tracking-\[0\.2em\] {
   letter-spacing: 0.2em;
+} .tracking-normal {
+  letter-spacing: 0em;
 } .tracking-tight {
   letter-spacing: -0.025em;
 } .tracking-tighter {
@@ -7778,6 +7782,71 @@ function App() {
     [fontSizeScale, setFontSizeScale] = useState(() => Number(localStorage.getItem('sanskrit-font-scale')) || 100),
     [showSRSInfo, setShowSRSInfo] = useState(false),
     [showKeyboard, setShowKeyboard] = useState(false);
+  // Position der frei verschiebbaren Mini-Tastatur (suche nach diesem exakten kommentar)
+  const [kbdPos, setKbdPos] = useState(() => {
+    try {
+      const s = localStorage.getItem('sanskrit_kbd_pos');
+      return s ? JSON.parse(s) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+  const [kbdDragging, setKbdDragging] = useState(false);
+  const kbdOffsetRef = useRef({
+    x: 0,
+    y: 0
+  });
+  const startKbdDrag = e => {
+    e.preventDefault();
+    const point = e.touches ? e.touches[0] : e;
+    const panelEl = e.currentTarget.closest('[data-kbd-panel]');
+    const rect = panelEl.getBoundingClientRect();
+    kbdOffsetRef.current = {
+      x: point.clientX - rect.left,
+      y: point.clientY - rect.top
+    };
+    setKbdPos({
+      x: rect.left,
+      y: rect.top
+    });
+    setKbdDragging(true);
+  };
+  useEffect(() => {
+    if (!kbdDragging) return;
+    const handleMove = e => {
+      if (e.touches) e.preventDefault();
+      const point = e.touches ? e.touches[0] : e;
+      const maxX = window.innerWidth - 60;
+      const maxY = window.innerHeight - 60;
+      const newX = Math.min(Math.max(8, point.clientX - kbdOffsetRef.current.x), maxX);
+      const newY = Math.min(Math.max(8, point.clientY - kbdOffsetRef.current.y), maxY);
+      setKbdPos({
+        x: newX,
+        y: newY
+      });
+    };
+    const handleUp = () => {
+      setKbdDragging(false);
+      setKbdPos(pos => {
+        try {
+          if (pos) localStorage.setItem('sanskrit_kbd_pos', JSON.stringify(pos));
+        } catch (e) {}
+        return pos;
+      });
+    };
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    window.addEventListener('touchmove', handleMove, {
+      passive: false
+    });
+    window.addEventListener('touchend', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('touchend', handleUp);
+    };
+  }, [kbdDragging]);
   const [showPDFModal, setShowPDFModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -7825,7 +7894,7 @@ function App() {
       },
       genders: ['m', 'f', 'n', 'none'],
       voices: ['parasmaipada', 'ātmanepada'],
-      showUbhayapada: true
+      showUbhayapada: false
     };
 
     // Verschmelze alte Daten mit neuen Standards (suche nach diesem exakten kommentar)
@@ -8403,12 +8472,24 @@ function App() {
     className: "absolute inset-0 z-50 cursor-pointer",
     title: "Zur\xFCck zur \xDCbersicht"
   })), view === 'home' && renderHome(), showKeyboard && /*#__PURE__*/React.createElement("div", {
-    className: "absolute top-20 sm:top-24 right-4 z-[200] bg-white dark:bg-stone-800 border border-teal-500/30 p-2 rounded-2xl shadow-2xl flex flex-wrap gap-1 max-w-[280px] popup-anim"
+    "data-kbd-panel": true,
+    className: `${kbdPos ? 'fixed' : 'absolute top-20 sm:top-24 right-4'} z-[200] bg-white dark:bg-stone-800 border border-teal-500/30 p-2 rounded-2xl shadow-2xl flex flex-wrap gap-1 max-w-[280px] popup-anim`,
+    style: kbdPos ? {
+      left: kbdPos.x,
+      top: kbdPos.y
+    } : undefined
   }, /*#__PURE__*/React.createElement("div", {
-    className: "w-full flex justify-between items-center px-2 mb-1 border-b border-stone-100 dark:border-stone-700 pb-1"
+    onMouseDown: startKbdDrag,
+    onTouchStart: startKbdDrag,
+    style: {
+      touchAction: 'none'
+    },
+    className: "w-full flex justify-between items-center px-2 mb-1 border-b border-stone-100 dark:border-stone-700 pb-1 cursor-move select-none"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] font-bold text-stone-400 uppercase tracking-widest"
-  }, t('keyboardTitle', settings?.language)), /*#__PURE__*/React.createElement("button", {
+    className: "text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1.5"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "opacity-60 tracking-normal"
+  }, "\u283F"), t('keyboardTitle', settings?.language)), /*#__PURE__*/React.createElement("button", {
     onClick: () => setShowKeyboard(false),
     className: "text-stone-400 hover:text-red-500 transition-colors"
   }, /*#__PURE__*/React.createElement(X, {
